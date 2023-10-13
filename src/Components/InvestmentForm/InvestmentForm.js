@@ -2,26 +2,25 @@ import React, { useState } from "react";
 import styles from "./InvestmentForm.module.css";
 
 const InvestmentForm = (props) => {
-  const [userInput, setUserInput] = useState({
+  const initialState = {
     "current-savings": "",
     "yearly-contribution": "",
     "expected-return": "",
     duration: "",
-  });
+  };
+
+  const [userInput, setUserInput] = useState(initialState);
 
   function resetClickHandler() {
-    setUserInput({
-      "current-savings": "",
-      "yearly-contribution": "",
-      "expected-return": "",
-      duration: "",
+    setUserInput(() => {
+      props.onCalculate(initialState);
+      return initialState;
     });
   }
 
   function submitHandler(event) {
     event.preventDefault();
-    //props.onCalculate(onCalculate);
-    console.log("submit clicked");
+    props.onCalculate(userInput);
   }
 
   function inputChangeHandler(event) {
@@ -34,11 +33,7 @@ const InvestmentForm = (props) => {
   }
 
   return (
-    <form
-      className={styles.form}
-      onSubmit={submitHandler}
-      //onCalculate={onCalculate}
-    >
+    <form className={styles.form} onSubmit={submitHandler}>
       <div className={styles["input-group"]}>
         <p>
           <label htmlFor="current-savings">Current Savings ($)</label>
