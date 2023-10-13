@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./InvestmentForm.module.css";
 
 const InvestmentForm = () => {
+  const [userInput, setUserInput] = useState({
+    "current-savings": "",
+    "yearly-contribution": "",
+    "expected-return": "",
+    duration: "",
+  });
+
   function resetClickHandler() {
     console.log("reset clicked");
   }
@@ -12,7 +19,12 @@ const InvestmentForm = () => {
   }
 
   function inputChangeHandler(event) {
-    console.log(event.target.id, event.target.value);
+    setUserInput((previousState) => {
+      return {
+        ...previousState,
+        [event.target.id]: event.target.value,
+      };
+    });
   }
 
   return (
